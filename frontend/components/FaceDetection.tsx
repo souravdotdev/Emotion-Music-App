@@ -6,6 +6,7 @@ import {
   FilesetResolver,
   FaceLandmarkerResult
 } from "@mediapipe/tasks-vision";
+import { Button } from "./ui/button";
 
 export default function FaceDetection(): React.JSX.Element {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -98,7 +99,7 @@ export default function FaceDetection(): React.JSX.Element {
         playsInline
       />
       <h2 className="text-2xl font-bold text-white">{expression}</h2>
-    <button className="cursor-pointer" onClick={detectLoop}>Analyse</button>
+    <Button className="cursor-pointer" onClick={detectLoop}>Analyse</Button>
     </div>
   );
 }
