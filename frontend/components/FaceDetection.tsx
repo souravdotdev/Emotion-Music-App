@@ -13,9 +13,6 @@ export default function FaceDetection(): React.JSX.Element {
   const streamRef = useRef<MediaStream | null>(null);
   const [expression, setExpression] = useState<string>("Detecting...");
 
-
-
-
   useEffect(() => {
     init({videoRef, landmarkerRef, streamRef});
   }, []);
