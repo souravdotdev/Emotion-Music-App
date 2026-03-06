@@ -99,6 +99,14 @@ export async function loginUserController(req: Request, res: Response){
             username: isUserExists.username
         }
     })
-
     
+}
+
+export async function getMeController(req: Request, res: Response){
+    const user = await userModel.findById(req.user?.id);
+
+    return res.status(200).json({
+        message: "User fetched successfully",
+        user
+    })
 }
