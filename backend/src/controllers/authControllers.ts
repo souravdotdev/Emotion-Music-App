@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { userModel } from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { blacklistModel } from "../models/blacklistModel";
 
 export async function registerUserController(req: Request, res: Response){
     const {username, email, password} = req.body;
@@ -108,5 +109,19 @@ export async function getMeController(req: Request, res: Response){
     return res.status(200).json({
         message: "User fetched successfully",
         user
+    })
+}
+
+export async function logoutUserController(req: Request, res: Response){
+    const token = req.cookies.token;
+
+    res.clearCookie("token");
+
+    await blacklistModel.create({
+        token
+    })
+
+    res.status(200).json({
+        message: "User Logout Successfully"
     })
 }

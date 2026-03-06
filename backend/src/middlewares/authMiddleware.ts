@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { blacklistModel } from "../models/blacklistModel";
 
 export async function authMiddleware(req: Request, res: Response, next: NextFunction){
     const token = req.cookies.token;
@@ -7,6 +8,16 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
     if(!token){
         return res.status(401).json({
             message: "Token not found"
+        })
+    }
+
+    const isTokenBlacklisted = await blacklistModel.findOne({
+        token
+    })
+
+    if(isTokenBlacklisted){
+        return res.status(401).json({
+            message: "Unauthorized due to Invalid token"
         })
     }
 
